@@ -11,6 +11,7 @@ https://github.com/rub-hgi/ConditionsLib
 
 #include "basic_linear_algebra.hpp"
 #include <NTL/mat_GF2.h>
+#include <algorithm>
 
 /// Subspaces of GF(2)^n represented by the binary representation of some
 /// uint64_t.
@@ -49,9 +50,7 @@ public:
     return basic_linear_algebra::ConvertToUint(x);
   }
 
-  Uint64Subspace() {
-    truncation_ = 0;
-  }
+  Uint64Subspace() { truncation_ = 0; }
 
   Uint64Subspace(NTL::mat_GF2 ints, ssize_t truncation, bool skip_rre = false)
       : truncation_(truncation), space_(std::move(ints)) {

@@ -13,14 +13,14 @@ We tested the library with the following dependencies on a Linux machine:
 | [cmake] (https://cmake.org)          | 3.21.2         |
 | [NTL] (https://libntl.org)           | 11.5.2         |
 | [GMP] (https://gmplib.org)           | 6.2.1          |
-| [openmp*] (https://openmp.llvm.org/) | 12.0.1         | 
-| [doxygen**] (https://www.doxygen.nl) | 1.9.2          | 
+| [openmp*] (https://openmp.llvm.org/) | 12.0.1         |
+| [doxygen**] (https://www.doxygen.nl) | 1.9.2          |
 
 where the dependencies marked with a * are only necessary for compiling all of the examples,
 those with ** are only necessary for building the documentation.
 We make use of gcc's C++20-support (mainly for std::popcount).
 
-# Building the Library 
+# Building the Library
 
 The library needs to be compiled (i.e. it is not header only).
 It suffices to run cmake on the top-level CMakeLists.txt and then use the resulting makefile for building the library.
@@ -47,6 +47,6 @@ make doxygen
 ```
 
 # Equivalence Classes of Balanced Functions and 4-bit Sboxes
-The equivalence classes of balanced functions 
+The equivalence classes of balanced functions
 up to dimension 6 and 4-bit Sboxes in the FunctionData
 directory were given to us by Shahram Rasoolzadeh.

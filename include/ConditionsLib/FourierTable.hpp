@@ -8,54 +8,52 @@ https://github.com/rub-hgi/ConditionsLib
 #ifndef CONDITIONS_LIB_FOURIER_TABLE_HPP_
 #define CONDITIONS_LIB_FOURIER_TABLE_HPP_
 
+#include "FourierTable.hpp"
+#include "VectorialBooleanFunction.hpp"
+#include "basic_linear_algebra.hpp"
+#include <NTL/mat_GF2.h>
+#include <NTL/vec_GF2.h>
 #include <bit>
 #include <cstdint>
-#include <vector>
 #include <iostream>
+#include <numeric>
 #include <random>
 #include <utility>
-#include <NTL/vec_GF2.h>
-#include <NTL/mat_GF2.h>
-#include <numeric>
-#include "VectorialBooleanFunction.hpp"
-#include "FourierTable.hpp"
-#include "basic_linear_algebra.hpp"
+#include <vector>
 
 namespace FourierTableAux {
-typedef uint64_t(*popcount_like)(uint64_t);
+typedef uint64_t (*popcount_like)(uint64_t);
 uint64_t MyPopcount(uint64_t x);
-}
+} // namespace FourierTableAux
 
-template<FourierTableAux::popcount_like po = FourierTableAux::MyPopcount>
+template <FourierTableAux::popcount_like po = FourierTableAux::MyPopcount>
 class FourierTable {
- private:
+private:
   std::vector<std::vector<int64_t>> table;
- public:
-  template<class Function>
-  explicit FourierTable(const Function &f);
+
+public:
+  template <class Function> explicit FourierTable(const Function &f);
 
   int64_t operator()(uint64_t alpha, uint64_t beta) const;
 };
 
-template<FourierTableAux::popcount_like po>
-template<class Function>
+template <FourierTableAux::popcount_like po>
+template <class Function>
 FourierTable<po>::FourierTable(const Function &f) {
   table.resize(1u << f.InputSize());
   for (size_t alpha = 0; alpha < 1u << f.InputSize(); ++alpha) {
     table[alpha].resize(1u << f.OutputSize());
-    std::fill(table[alpha].begin(),
-              table[alpha].end(), int64_t(0));
+    std::fill(table[alpha].begin(), table[alpha].end(), int64_t(0));
     for (size_t beta = 0; beta < 1u << f.OutputSize(); ++beta) {
       for (size_t x = 0; x < 1u << f.InputSize(); ++x) {
-        table[alpha][beta] += (po(x & alpha)
-            ^ po(f(x) & beta)) & 1u ? -1 : 1;
+        table[alpha][beta] += (po(x & alpha) ^ po(f(x) & beta)) & 1u ? -1 : 1;
       }
     }
   }
 }
-template<FourierTableAux::popcount_like po>
+template <FourierTableAux::popcount_like po>
 int64_t FourierTable<po>::operator()(uint64_t alpha, uint64_t beta) const {
   return table[alpha][beta];
 }
 
-#endif //CONDITIONS__FOURIERTABLE_HPP_
+#endif // CONDITIONS__FOURIERTABLE_HPP_

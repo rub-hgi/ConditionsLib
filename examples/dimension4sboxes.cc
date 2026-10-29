@@ -5,16 +5,16 @@ later version.
 Please refer to the official repository for the full licence text:
 https://github.com/rub-hgi/ConditionsLib
 */
+#include "ConditionsLib/ComponentFunction.hpp"
+#include "ConditionsLib/SboxTools.hpp"
+#include "ConditionsLib/Uint64Subspace.hpp"
+#include "ConditionsLib/VectorialBooleanFunction.hpp"
 #include <fstream>
 #include <iostream>
 #include <vector>
-#include "ConditionsLib/VectorialBooleanFunction.hpp"
-#include "ConditionsLib/SboxTools.hpp"
-#include "ConditionsLib/Uint64Subspace.hpp"
-#include "ConditionsLib/ComponentFunction.hpp"
 
 struct csv_line {
- public:
+public:
   std::string function;
   uint64_t sbox_number;
   uint64_t component;
@@ -25,8 +25,8 @@ struct csv_line {
   uint64_t degree;
   double costs_A;
   double costs_D;
-  friend std::ostream& operator<<(std::ostream&, const csv_line&);
-  static std::ostream& printHeader(std::ostream& os) {
+  friend std::ostream &operator<<(std::ostream &, const csv_line &);
+  static std::ostream &printHeader(std::ostream &os) {
     os << "function" << ",";
     os << "sbox_number" << ",";
     os << "component" << ",";
@@ -41,9 +41,9 @@ struct csv_line {
   }
 };
 
-std::ostream &operator<<(std::ostream &os, const csv_line& line) {
+std::ostream &operator<<(std::ostream &os, const csv_line &line) {
   os << line.function << ",";
-  os << line.sbox_number<< ",";
+  os << line.sbox_number << ",";
   os << line.component << ",";
   os << line.uniformity << ",";
   os << line.linearity << ",";
@@ -55,10 +55,10 @@ std::ostream &operator<<(std::ostream &os, const csv_line& line) {
   return os;
 }
 
-auto Analyse(const VectorialBooleanFunction& fun) {
+auto Analyse(const VectorialBooleanFunction &fun) {
   csv_line result;
   result.function += "\"";
-  for (auto x: fun.GetValues()) {
+  for (auto x : fun.GetValues()) {
     result.function += std::to_string(x);
   }
   result.function += "\"";
@@ -73,7 +73,7 @@ auto Analyse(const VectorialBooleanFunction& fun) {
     auto in = SboxTools::Intersection(alls);
     result.costs_D = // ((double)fun.InputSize() - in.Dimension()) -
         SboxTools::Dom(gs, fun.InputSize()).Dimension();
-  } catch(std::logic_error &e) {
+  } catch (std::logic_error &e) {
     std::cerr << "Nothing found.\n";
   }
   result.degree = SboxTools::NaiveDegree(fun);
@@ -90,7 +90,7 @@ int main() {
   auto functions_raw = SboxTools::ReadFile(file, dim, dim);
   csv_line::printHeader(std::cout) << std::endl;
   auto sbox_number = 0;
-  for (auto &x_raw: functions_raw) {
+  for (auto &x_raw : functions_raw) {
     VectorialBooleanFunction x(x_raw, dim, dim);
     for (uint64_t comp = 1; comp < (1u << dim); ++comp) {
       auto y = ComponentFunction(x, comp);

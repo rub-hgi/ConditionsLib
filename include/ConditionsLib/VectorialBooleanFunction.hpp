@@ -7,6 +7,7 @@ https://github.com/rub-hgi/ConditionsLib
 */
 #ifndef CONDITIONS_LIB_VECTORIAL_BOOLEAN_FUNCTION_HPP_
 #define CONDITIONS_LIB_VECTORIAL_BOOLEAN_FUNCTION_HPP_
+#include <algorithm>
 #include <cstdint>
 #include <ostream>
 #include <vector>
@@ -14,13 +15,17 @@ https://github.com/rub-hgi/ConditionsLib
 /// Class for storing a vectorial Boolean function
 class VectorialBooleanFunction {
 private:
-  size_t input_size = 0, output_size = 0; /** Input and output dimension of the function. */
+  size_t input_size = 0,
+         output_size = 0; /** Input and output dimension of the function. */
   std::vector<uint64_t> values; /**< Lookup table. */
-  bool ddt_calculated = false; /**< True if ddt does not have to be re-calculated. */
+  bool ddt_calculated =
+      false; /**< True if ddt does not have to be re-calculated. */
 
 protected:
-  std::vector<uint64_t> &GetValuesMutable(); /**< Get a mutable reference to the lookup-table */
-  void TruncateOutputSize(size_t new_output_size); /**< Change the number of output bits */
+  std::vector<uint64_t> &
+  GetValuesMutable(); /**< Get a mutable reference to the lookup-table */
+  void TruncateOutputSize(
+      size_t new_output_size); /**< Change the number of output bits */
 
 public:
   std::vector<std::vector<uint64_t>> ddt; /**< Field for saving the ddt */

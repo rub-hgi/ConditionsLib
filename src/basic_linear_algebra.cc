@@ -1,4 +1,5 @@
 #include "ConditionsLib/basic_linear_algebra.hpp"
+#include <algorithm>
 
 NTL::vec_GF2 basic_linear_algebra::ConvertToNtl(uint64_t x, size_t length) {
   NTL::vec_GF2 bit_vector;

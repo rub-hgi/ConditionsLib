@@ -16,10 +16,9 @@ int main() {
   const size_t dim = 4;
   std::string filename = "../FunctionData/F4b.txt";
   std::ifstream file(filename);
-  auto functions=
-      SboxTools::ReadFile(file, dim, outdim);
+  auto functions = SboxTools::ReadFile(file, dim, outdim);
   SboxTools::csv_line::PrintHeader(std::cout);
-  for (const auto &x_raw: functions) {
+  for (const auto &x_raw : functions) {
     VectorialBooleanFunction x(x_raw, dim, outdim);
     auto line = SboxTools::Analyse<SboxTools::csv_line>(x);
     {

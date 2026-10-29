@@ -11,7 +11,7 @@ https://github.com/rub-hgi/ConditionsLib
 #include <bit>
 
 class ComponentFunction : public VectorialBooleanFunction {
- public:
+public:
   /// Construct a function representing \p component * \p underlying_function.
   /**
    * Construct a function representing \p component * \p underlying_function.
@@ -19,9 +19,9 @@ class ComponentFunction : public VectorialBooleanFunction {
    * std::popcount(component & underlying_function).
    */
   ComponentFunction(const VectorialBooleanFunction &underlying_function,
-                    uint64_t component) :
-      VectorialBooleanFunction(underlying_function) {
-    for (auto &x: GetValuesMutable()) {
+                    uint64_t component)
+      : VectorialBooleanFunction(underlying_function) {
+    for (auto &x : GetValuesMutable()) {
       x = std::popcount(x & component) % 2;
     }
     TruncateOutputSize(1);

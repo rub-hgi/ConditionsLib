@@ -1,0 +1,20 @@
+name: CI Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pre-commit
+        run: pip install pre-commit
+
+      - name: Run pre-commit hooks on PR changes
+        run: pre-commit run --from-ref origin/${{ github.base_ref }} --to-ref HEAD --show-diff-on-failure

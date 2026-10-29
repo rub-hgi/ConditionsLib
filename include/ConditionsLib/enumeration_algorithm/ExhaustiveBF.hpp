@@ -16,18 +16,17 @@ using BinaryDecisionTree = BruteForce::BinaryDecisionTree;
 using BinaryDecisionTreePointer = BruteForce::BinaryDecisionTreePointer;
 typedef std::vector<BinaryDecisionTreePointer> BinaryDecisionTreeVector;
 
-BinaryDecisionTreeVector TreeSearch(const VectorialBooleanFunction &fun,
-                                    const NTL::mat_GF2 &vectors_on_path,
-                                    const NTL::vec_GF2 &choices,
-                                    int last_choice,
-                                    const NTL::vec_GF2 &coset_so_far,
-                                    double &bound,
-                                    int level, bool print = true);
+BinaryDecisionTreeVector
+TreeSearch(const VectorialBooleanFunction &fun,
+           const NTL::mat_GF2 &vectors_on_path, const NTL::vec_GF2 &choices,
+           int last_choice, const NTL::vec_GF2 &coset_so_far, double &bound,
+           int level, bool print = true);
 
-BinaryDecisionTreeVector StartSearch(const VectorialBooleanFunction &fun, bool print=true);
 BinaryDecisionTreeVector StartSearch(const VectorialBooleanFunction &fun,
-                                     double &bound, bool print=true);
+                                     bool print = true);
+BinaryDecisionTreeVector StartSearch(const VectorialBooleanFunction &fun,
+                                     double &bound, bool print = true);
 
-};
+}; // namespace ExhaustiveBF
 
 #endif

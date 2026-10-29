@@ -1,4 +1,4 @@
-add_library(ConditionsLib 
+add_library(ConditionsLib
   FourierTable.cc
   SboxTools.cc
   VectorialBooleanFunction.cc
@@ -24,4 +24,3 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/ConditionsLib"
 
 
 add_library(ConditionsLib::ConditionsLib ALIAS ConditionsLib)
-

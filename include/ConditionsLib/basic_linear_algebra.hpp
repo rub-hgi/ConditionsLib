@@ -10,6 +10,7 @@ https://github.com/rub-hgi/ConditionsLib
 
 #include <bit>
 #include <cassert>
+#include <cstdint>
 #include <vector>
 
 #include <NTL/mat_GF2.h>

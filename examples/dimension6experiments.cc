@@ -5,12 +5,12 @@ later version.
 Please refer to the official repository for the full licence text:
 https://github.com/rub-hgi/ConditionsLib
 */
+#include "ConditionsLib/SboxTools.hpp"
 #include <fstream>
 #include <iostream>
 #include <omp.h>
-#include "ConditionsLib/SboxTools.hpp"
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
   const size_t outdim = 1;
   const size_t dim = 6;
   if (argc < 2) {
@@ -21,7 +21,7 @@ int main(int argc, char** argv) {
   std::string filename;
   filename = argv[1];
   std::ifstream file(filename);
-  ssize_t frst_line = 0; // start numbering from 0
+  ssize_t frst_line = 0;  // start numbering from 0
   ssize_t stop_line = -1; // exclusive
   if (argc >= 3) {
     frst_line = atoll(argv[2]);
@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
   }
   auto functions =
       SboxTools::ReadFileNodelim(file, dim, outdim, frst_line, stop_line);
-  for (const auto &x: functions) {
+  for (const auto &x : functions) {
     auto line = SboxTools::Analyse<SboxTools::csv_line>(x);
     {
       std::cout << line;
